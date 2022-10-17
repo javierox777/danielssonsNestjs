@@ -1,6 +1,8 @@
 export class CreateToolDto {
     name: string;
     groupTool:string;
-    number:number;
-    description:string;
+    serialNumber:number;
+    status:string
+    place: string;
+
 }

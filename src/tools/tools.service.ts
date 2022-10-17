@@ -14,15 +14,16 @@ export class ToolsService {
               ) {}
   
  async create(createToolDto: CreateToolDto) {
-  const {number} = createToolDto
+  const {serialNumber} = createToolDto
 try {
-  const existTools = await this.toolModel.findOne({number:number})
+  const existTools = await this.toolModel.findOne({serialNumber:serialNumber})
   if(existTools){
     return {
       message:"number is altready in use",
       body:"busca otro"
     }
   }
+  createToolDto.status = "available"
   const newTools = new this.toolModel(createToolDto)
   await newTools.save()
     return {
@@ -37,7 +38,7 @@ try {
  async findAll() {
    try {
   
-    const tools= await this.toolModel.find().populate("groupTool")
+    const tools= await this.toolModel.find().populate("groupTool").populate("place")
     if(tools){
       return tools;
     }

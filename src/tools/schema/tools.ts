@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
 import {GroupsTools} from '../../groups-tools/schema/groups-tools.schema'
+import {Place} from '../../trabajos/schema/place'
 
 
 export type ToolsDocument = Tools & Document;
@@ -10,13 +11,16 @@ export type ToolsDocument = Tools & Document;
 @Schema({ timestamps: true})
 export class Tools {
   @Prop()
-  number: number;
+  serialNumber: number;
 
   @Prop()
   name: string;
 
   @Prop()
-  description: string;
+  status: string;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Place' })
+  place: Place;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'GroupsTools' })
   groupTool: GroupsTools;
